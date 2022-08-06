@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
+import Image from "next/image";
+
 
 function CardItem({ id, title, image, subtitle, createdAt, index , meetID}) {
   const [itemtitle, setItemtitle] = useState('');
@@ -11,13 +13,26 @@ function CardItem({ id, title, image, subtitle, createdAt, index , meetID}) {
   const date = new Date(createdAt).toLocaleString();
   const router = useRouter();
 
+
+   const myLoader = () => {
+     if (itemImage !== "") {
+       if (itemImage.includes("google")) {
+         return `https://drive.google.com/uc?export=view&id=${imageID}`;
+       } else {
+         return image;
+       }
+     } else {
+       return "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_960_720.jpg";
+     }
+   };
+
   useEffect(()=>{
     setItemDate(date);
     setItemImage(image);
     setItemtitle(title);
     setItemID(meetID);
     setItemSubtitle(subtitle);
-  }, []);
+  }, [date, image, title, meetID, subtitle]);
 
   function showMeetup() {
     router.push("/" + id);
@@ -26,10 +41,13 @@ function CardItem({ id, title, image, subtitle, createdAt, index , meetID}) {
     <Fragment>
       <div key={id}>
         <div>
-          <img
+          <Image
+            loader={myLoader}
             src={itemImage}
             alt=" random imgee"
-            className="w-full object-cover object-center rounded-lg shadow-md hover:translate-y-4"
+            className="object-cover object-center rounded-lg shadow-md hover:translate-y-4"
+            width="350vh"
+            height="250vh"
           />
 
           <div className="relative px-4 -mt-16 hover:scale-90">

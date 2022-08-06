@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
+import Image from "next/image";
+
 
 function Footer() {
   return (
@@ -9,9 +11,9 @@ function Footer() {
           <div className="flex flex-col items-center mb-8 space-y-6 md:flex-row md:space-y-0 md:justify-between md:items-start">
             <div className="flex flex-col items-center space-y-8 md:items-start md:space-y-4">
               <div className="ml-2">
-                  <p className="text-4xl font-serif text-white capitalize underline tracking-wider hover:scale-110 hover:-translate-y-4">
-                    Meetly
-                  </p>
+                <p className="text-4xl font-serif text-white capitalize underline tracking-wider hover:scale-110 hover:-translate-y-4">
+                  Meetly
+                </p>
               </div>
               <div className="flex flex-col items-center space-y-4 font-bold text-white md:flex-row md:space-y-0 md:space-x-6 md:ml-3">
                 <div className="h-10 group">
@@ -36,29 +38,45 @@ function Footer() {
               <div className="flex items-center justify-center mx-auto space-x-4 md:justify-end md:mx-0">
                 <div className="h-8 group">
                   <Link href="#">
-                    <img src="image/icon-facebook.svg" alt="" className="h-6" />
-                  </Link>
-                </div>
-                <div className="h-8 group">
-                  <Link href="#">
-                    <img src="image/icon-twitter.svg" alt="" className="h-6" />
-                  </Link>
-                </div>
-                <div className="h-8 group">
-                  <Link href="#">
-                    <img
-                      src="image/icon-pinterest.svg"
+                    <Image
+                      src="/image/icon-facebook.svg"
                       alt=""
                       className="h-6"
+                      width="25"
+                      height="25"
                     />
                   </Link>
                 </div>
                 <div className="h-8 group">
                   <Link href="#">
-                    <img
-                      src="image/icon-instagram.svg"
+                    <Image
+                      src="/image/icon-twitter.svg"
                       alt=""
                       className="h-6"
+                      width="25"
+                      height="25"
+                    />
+                  </Link>
+                </div>
+                <div className="h-8 group">
+                  <Link href="#">
+                    <Image
+                      src="/image/icon-pinterest.svg"
+                      alt=""
+                      className="h-6"
+                      width="25"
+                      height="25"
+                    />
+                  </Link>
+                </div>
+                <div className="h-8 group">
+                  <Link href="#">
+                    <Image
+                      src="/image/icon-instagram.svg"
+                      alt=""
+                      className="h-6"
+                      width="25"
+                      height="25"
                     />
                   </Link>
                 </div>

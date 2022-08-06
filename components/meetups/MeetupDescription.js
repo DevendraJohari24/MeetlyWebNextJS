@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function MeetupDescription(
   {id, title, description, subtitle, meetID, image, createdAt },
@@ -24,8 +25,11 @@ function MeetupDescription(
     setMeetImage(image);
     setMeetId(id);
     setMeetDate(date);
-  }, []);
+  }, [description, meetID, title, subtitle, date, id, image]);
 
+  const myLoader = () => {
+    return meetImage;
+  }
   const deleteMeetHandler = async() => {
       const { URL } = process.env;
       console.log(URL);
@@ -87,8 +91,8 @@ function MeetupDescription(
         <section>
           <div className="flex flex-col mt-32 md:mt-0 md:max-w-6xl md:mx-auto md:mb-32 w-full md:space-y-7 md:bg-white pt-4 h-auto">
             <div className="flex flex-row">
-              <div className="flex flex-col w-2/3 items-end text-lg space-y-1 pr-16">
-                <p className="text-green-700 text-sm md:text-lg">
+              <div className="flex flex-col w-2/3 items-end text-lg ml-0.5 md:ml-0 space-y-1 md:pr-16">
+                <p className="text-green-700 md:text-lg">
                   {meetDate} / #{meetMeetID}
                 </p>
                 <p className="text-black uppercase underline underline-offset-4 text-xl md:text-5xl font-alanta">
@@ -105,23 +109,27 @@ function MeetupDescription(
                     onClick={() => setShowModal(true)}
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </div>
               </div>
             </div>
             <div className="flex flex-col w-full h-full items-center shadow-sm pb-8">
-              <div className="w-full h-full p-2">
-                <img
+              <div className="w-full md:h-[750px] p-2">
+                <Image
                   src={meetImage}
+                  loader={myLoader}
                   alt=""
-                  className="w-full h-full border-2 p-2"
+                  layout="responsive"
+                  width="2048w"
+                  height="1336vh"
+                  className="object-cover"
                 />
               </div>
-              <div className="w-3/4 h-auto bg-white p-5 -mt-20 shadow-lg hover:scale-110">
+              <div className="w-3/4 h-auto bg-white p-5 -mt-20 shadow-lg hover:scale-110 z-10">
                 <p className="text-xl text-center underline p-2">
                   {meetSubtitle}
                 </p>
