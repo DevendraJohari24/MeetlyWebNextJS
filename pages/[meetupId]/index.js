@@ -1,18 +1,6 @@
-import { useRouter } from "next/router";
 import MeetupDescription from "../../components/meetups/MeetupDescription";
 
 function showMorePage({ meetupData }) {
-  const router = useRouter();
-  const deleteMeetHandler = async (id) => {
-    console.log("Request Come");
-    const { URL } = process.env;
-    console.log(URL)
-    const res = await fetch("/api/meetup/" + id, { method: "DELETE" });
-    if (res.status === 204) {
-      alert("Meetup Deleted Successfully!");
-      router.push("/");
-    }
-  };
   return (
    meetupData ? ( <MeetupDescription
       id={meetupData.id}
@@ -22,7 +10,6 @@ function showMorePage({ meetupData }) {
       subtitle={meetupData.subtitle}
       meetID={meetupData.meetID}
       createdAt={meetupData.createdAt}
-      deleteMeetHandler={deleteMeetHandler}
     />) : (<div><p className="text-xl text-white">No data Found!</p></div>)
   );
 }
