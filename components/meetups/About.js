@@ -9,6 +9,7 @@ function About(){
               src="/image/aboutImage.jpg"
               alt=""
               width="750w"
+              priority={true}
               height="600w"
             />
             <div className="top-48 pr-0 bg-white md:absolute md:right-0 md:py-20 md:pl-20">

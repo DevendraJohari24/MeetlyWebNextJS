@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next dev",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",

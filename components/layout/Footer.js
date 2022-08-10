@@ -37,7 +37,6 @@ function Footer() {
             <div className="flex flex-col items-start justify-between space-y-4 text-gray-500">
               <div className="flex items-center justify-center mx-auto space-x-4 md:justify-end md:mx-0">
                 <div className="h-8 group">
-                  <Link href="#">
                     <Image
                       src="/image/icon-facebook.svg"
                       alt=""
@@ -45,10 +44,8 @@ function Footer() {
                       width="25"
                       height="25"
                     />
-                  </Link>
                 </div>
                 <div className="h-8 group">
-                  <Link href="#">
                     <Image
                       src="/image/icon-twitter.svg"
                       alt=""
@@ -56,10 +53,8 @@ function Footer() {
                       width="25"
                       height="25"
                     />
-                  </Link>
                 </div>
                 <div className="h-8 group">
-                  <Link href="#">
                     <Image
                       src="/image/icon-pinterest.svg"
                       alt=""
@@ -67,10 +62,8 @@ function Footer() {
                       width="25"
                       height="25"
                     />
-                  </Link>
                 </div>
                 <div className="h-8 group">
-                  <Link href="#">
                     <Image
                       src="/image/icon-instagram.svg"
                       alt=""
@@ -78,7 +71,6 @@ function Footer() {
                       width="25"
                       height="25"
                     />
-                  </Link>
                 </div>
               </div>
               <div className="font-bold">

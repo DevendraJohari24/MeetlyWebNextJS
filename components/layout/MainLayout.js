@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { Fragment } from "react";
 import NavbarNew from "../Navbar/NavbarNew";
 import Footer from "./Footer";
@@ -15,8 +14,6 @@ function MainLayout(props){
         >
           <NavbarNew />
           <main>{props.children}</main>
-        </section>
-        <section>
           <Footer />
         </section>
       </Fragment>

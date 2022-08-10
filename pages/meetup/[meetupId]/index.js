@@ -1,46 +1,66 @@
 import { Fragment, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import NoMeetupPage from "../../../components/meetups/NoMeetupPage";
 import Image from "next/image";
+import { getMeetupById, getMeetupsData } from "../../api/meetups";
+import { useRouter } from "next/router";
 
-function MeetupDescription(
-  {id, title, description, subtitle, meetID, image, createdAt },
-  
-) {
-  const router = useRouter();
-  const [meetId, setMeetId] = useState();
+function MeetupDescription({selectedMeetup, meetupId}) {
+  const [meetup, setMeetup] = useState(selectedMeetup);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [meetTitle, setTitle] = useState("");
-  const [meetDescription, setDescription] = useState("");
-  const [meetSubtitle, setSubtitle] = useState("");
-  const [meetMeetID, setMeetID] = useState("");
-  const [meetImage, setMeetImage] = useState("");
-  const [meetDate, setMeetDate] = useState("");
 
-  const date = new Date(createdAt).toLocaleString();
+  const router = useRouter();
   useEffect(() => {
-    setDescription(description);
-    setMeetID(meetID);
-    setTitle(title);
-    setSubtitle(subtitle);
-    setMeetImage(image);
-    setMeetId(id);
-    setMeetDate(date);
-  }, [description, meetID, title, subtitle, date, id, image]);
+    const getMeetup = async (meetId) => {
+      setIsLoading(true);
+      await fetch(`/api/meetup/${meetId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const selectedMeetup = data.meetup;
+          const newMeetup = {
+            id: selectedMeetup._id.toString(),
+            title: selectedMeetup.title,
+            subtitle: selectedMeetup.subtitle,
+            image: selectedMeetup.image,
+            meetID: selectedMeetup.meetID,
+            description: selectedMeetup.description,
+            createdAt: selectedMeetup.createdAt
+          };
 
-  const myLoader = () => {
-    return meetImage;
-  }
-  const deleteMeetHandler = async() => {
-      const { URL } = process.env;
-      console.log(URL);
-      const res = await fetch("/api/meetup/" + meetId, { method: "DELETE" });
-      if (res.status === 204) {
-        alert("Meetup Deleted Successfully!");
-        router.push(URL);
-      }
+          setMeetup(newMeetup);
+          setIsLoading(false);
+        });
+    };
+    getMeetup(meetupId);
+  }, [meetupId]);
+
+  if (isLoading) {
+    return (
+      <Fragment>
+        <p>Loading..........</p>
+      </Fragment>
+    );
   }
 
-  
+  if (!meetup) {
+    return (
+      <Fragment>
+        <NoMeetupPage />
+      </Fragment>
+    );
+  }
+  function onImageLoader({ src, width, quality }) {
+    return `${src}?w=${width}&q=${quality || 75}`;
+  }
+
+  const deleteMeetHandler = async (id) => {
+    const res = await fetch(`/api/meetup/${id}`, { method: "DELETE" });
+    if (res.status === 201) {
+      alert("Meetup Deleted Successfully!");
+      router.push("/");
+    }
+  };
+
   return (
     <Fragment>
       {showModal ? (
@@ -76,7 +96,7 @@ function MeetupDescription(
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={deleteMeetHandler}
+                      onClick={deleteMeetHandler.bind(null, meetup.id)}
                     >
                       Delete
                     </button>
@@ -93,10 +113,10 @@ function MeetupDescription(
             <div className="flex flex-row">
               <div className="flex flex-col w-2/3 items-end text-lg ml-0.5 md:ml-0 space-y-1 md:pr-16">
                 <p className="text-green-700 md:text-lg">
-                  {meetDate} / #{meetMeetID}
+                  {meetup.createdAt} / #{meetup.meetID}
                 </p>
-                <p className="text-black uppercase underline underline-offset-4 text-xl md:text-5xl font-alanta">
-                  {meetTitle}
+                <p className="new Date(meetup.createdAt).toLocaleString()text-black uppercase underline underline-offset-4 text-xl md:text-5xl font-alanta">
+                  {meetup.title}
                 </p>
               </div>
               <div className="w-1/3 flex justify-end pr-5 pt-2">
@@ -120,10 +140,9 @@ function MeetupDescription(
             <div className="flex flex-col w-full h-full items-center shadow-sm pb-8">
               <div className="w-full md:h-[750px] p-2">
                 <Image
-                  src={meetImage}
-                  loader={myLoader}
+                  src={meetup.image}
+                  loader={onImageLoader}
                   alt=""
-                  layout="responsive"
                   width="2048w"
                   height="1336vh"
                   className="object-cover"
@@ -131,12 +150,12 @@ function MeetupDescription(
               </div>
               <div className="w-3/4 h-auto bg-white p-5 -mt-20 shadow-lg hover:scale-110 z-10">
                 <p className="text-xl text-center underline p-2">
-                  {meetSubtitle}
+                  {meetup.subtitle}
                 </p>
                 <div className="bg-slate-500 border"></div>
                 <div className="block  w-full h-auto my-2">
                   <p className="md:text-2xl overflow-hidden text-center">
-                    {meetDescription}
+                    {meetup.description}
                   </p>
                 </div>
               </div>
@@ -147,5 +166,39 @@ function MeetupDescription(
     </Fragment>
   );
 }
+
+export async function getStaticPaths(){
+  const meetups = await getMeetupsData();
+  const paths = meetups.map(event => ({params: {meetupId: event._id.toString()}}));
+
+  return {
+    paths: paths,
+    fallback: true
+  }
+}
+
+
+export async function getStaticProps(context){
+    const meetupId = context.params.meetupId;
+    const selectedMeetup = await getMeetupById(meetupId);
+    return {
+      props: {
+        selectedMeetup: {
+          id: selectedMeetup._id.toString(),
+          title: selectedMeetup.title,
+          subtitle: selectedMeetup.subtitle,
+          image: selectedMeetup.image,
+          description: selectedMeetup.description,
+          meetID: selectedMeetup.meetID,
+          createdAt: selectedMeetup.createdAt
+        },
+        meetupId: meetupId
+      }
+    }
+}
+
+
+
+
 
 export default MeetupDescription;

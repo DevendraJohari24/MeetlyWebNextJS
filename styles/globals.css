@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    h5 {
-        @apply absolute px-6 duration-200 w-52 bottom-4 md:bottom-8 md:px-10 group-hover:scale-110 group-hover:text-black;
-    }
+  h5 {
+    @apply absolute px-6 duration-200 w-52 bottom-4 md:bottom-8 md:px-10 group-hover:scale-110 group-hover:text-black;
+  }
 }
 
 @layer components {
@@ -23,56 +22,41 @@
 }
 
 .item {
-    @apply  relative overflow-hidden h-40  md:w-1/6 md:h-80;
+  @apply relative overflow-hidden h-40  md:w-1/6 md:h-80;
 }
 
 .item-gradient {
-    @apply absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-transparent to-gray-900 group-hover:from-gray-50 group-hover:to-white group-hover:opacity-70;
+  @apply absolute top-0 bottom-0 right-0 left-0 bg-gradient-to-b from-transparent to-gray-900 group-hover:from-gray-50 group-hover:to-white group-hover:opacity-70;
 }
 
-/*
-#hero {
-  background-image: url("/image/meetlyBgImage.jpg");
- background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-@media (max-width: 576px) {
-  #hero {
-    background-image: url("/image/meetlyBgImage.jpg");
-    background-position: center;
-  }
-}
-
-*/
 /* Hamburger Menu */
 .hamburger {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    transition: all 0.25s;
-    position: relative;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: all 0.25s;
+  position: relative;
 }
 
 .hamburger-top,
 .hamburger-middle,
 .hamburger-bottom {
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    top: 0;
-    left: 0;
-    background: #fff;
-    transform: rotate(0);
-    transition: all 0.5s;
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  transform: rotate(0);
+  transition: all 0.5s;
 }
 
-.hamburger-middle{
-    transform: translateY(7px);
+.hamburger-middle {
+  transform: translateY(7px);
 }
 
-.hamburger-bottom{
-    transform: translateY(14px);
+.hamburger-bottom {
+  transform: translateY(14px);
 }
 
 .open {
@@ -81,7 +65,6 @@
 
 .open .hamburger-top {
   transform: rotate(45deg) translateY(6px) translateX(6px);
-
 }
 
 .open .hamburger-middle {
@@ -90,5 +73,4 @@
 
 .open .hamburger-bottom {
   transform: rotate(-45deg) translateY(6px) translateX(-6px);
-
 }
