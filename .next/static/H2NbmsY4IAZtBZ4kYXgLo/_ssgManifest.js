@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002F","\u002Fmeetup\u002F[meetupId]","\u002Fmeetups"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
